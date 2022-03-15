@@ -33,6 +33,7 @@ class Home extends StatelessWidget {
                     ),),
                   SizedBox(height: 10),
                   TextFormField(
+                    inputFormatters: [CEPMask()],
                     decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'CEP'
@@ -40,6 +41,7 @@ class Home extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   TextFormField(
+                    inputFormatters: [DATAMask()],
                     decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'DATA'
@@ -47,6 +49,7 @@ class Home extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   TextFormField(
+                    inputFormatters: [TELEFONEMask()],
                     decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'TELEFONE'
@@ -116,4 +119,62 @@ class RealMask extends TextInputFormatter{
     );
   }
 }
+class CEPMask extends TextInputFormatter{
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+    var value = newValue.text.replaceAll(RegExp(r'\D'), '');
+    final values = value.characters.toList();
+
+    var formatted = '';
+    for(var i = 0; i < values.length; i++) {
+      if ([1, 5].contains(i)) {
+        formatted += i == 5 ? '-' : '';
+      }
+      formatted += values[i];
+    }
+    return newValue.copyWith(
+      text: formatted,
+      selection: TextSelection.fromPosition(TextPosition(offset: formatted.length),
+      ),
+    );
+  }
+}
+class DATAMask extends TextInputFormatter{
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+    var value = newValue.text.replaceAll(RegExp(r'\D'), '');
+    final values = value.characters.toList();
+
+    var formatted = '';
+    for(var i = 0; i < values.length; i++) {
+      if ([2, 4].contains(i)) {
+        formatted += i == 5 ? '/' : '/';
+      }
+      formatted += values[i];
+    }
+    return newValue.copyWith(
+      text: formatted,
+      selection: TextSelection.fromPosition(TextPosition(offset: formatted.length),
+      ),
+    );
+  }
+}
+class TELEFONEMask extends TextInputFormatter{
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+    var value = newValue.text.replaceAll(RegExp(r'\D'), '');
+    final values = value.characters.toList();
+
+    var formatted = '';
+    for(var i = 0; i < values.length; i++) {
+      if ([1, 5].contains(i)) {
+        formatted += i == 5 ? '-' : '';
+      }
+      formatted += values[i];
+    }
+    return newValue.copyWith(
+      text: formatted,
+      selection: TextSelection.fromPosition(TextPosition(offset: formatted.length),
+      ),
+    );
+  }
+}
+
 
